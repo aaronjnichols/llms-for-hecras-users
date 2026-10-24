@@ -25,8 +25,11 @@ policy.
 
 HEC-RAS model inputs are separate downloads distributed as versioned ZIP assets through GitHub
 Releases. They are not included in the repository. Extract the required lesson package under
-`data/`, then compute a disposable copy under `work/` to produce results. Model packages have
-not been published yet.
+`data/`, then compute a disposable copy under `work/` to produce results.
+
+Download the checked [Beaver Creek and Davis input packages](https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.0).
+See [docs/MODEL_INPUTS.md](docs/MODEL_INPUTS.md) for installation and run steps, and
+[docs/model_inputs_release.json](docs/model_inputs_release.json) for file lists and checksums.
 
 See [docs/MODEL_DATA_WORKFLOW.md](docs/MODEL_DATA_WORKFLOW.md) for the model download layout
 and student instructions for an agent-assisted model run.

@@ -10,6 +10,11 @@
 
 The source project is `data/Example_Projects_7_0/Pipes/Davis/DavisStormSystem.prj`. Start from plan `p02`, **Full System ROM with Pump**, using geometry `g02` and unsteady-flow file `u01`.
 
+The [course input download](MODEL_INPUTS.md) contains 15 Davis model files. It excludes the
+original backup files and computed outputs. The historical run evidence below refers to the
+earlier 26-file source folder. New runs must record hashes for the installed input package.
+The selected plan, geometry, flow, event, and terrain inputs are unchanged in that package.
+
 This is a coupled 2D and pipe-network unsteady model. The fresh HEC-RAS 7.0.1 computation identifies 2,705 computational cells in `area2`, 11 in `DS Channel`, and 133 pipe-network nodes. Both 2D areas use the diffusion-wave equation set. It is not a 1D-only pipe exercise.
 
 Use the original hypothetical rainfall. We are not using the separate Davis design-storm comparison, and this example does not establish a design frequency for the rainfall.

@@ -21,7 +21,7 @@ Record these items in the repository before release:
 - Required HEC-RAS version, plan numbers, units, and lesson purpose.
 - For reference results, the engine version, input-file hashes, run settings, and run logs.
 
-No model packages or download links are published by this guide.
+See [MODEL_INPUTS.md](MODEL_INPUTS.md) for the selected models, package records, and run steps.
 
 ## Student folder layout
 
