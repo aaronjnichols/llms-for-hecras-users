@@ -1,0 +1,17 @@
+# Course runtime dependencies. Keep every direct dependency exactly pinned.
+numpy==2.5.2
+pandas==3.0.5
+scipy==1.18.0
+xarray==2026.7.0
+h5py==3.16.0
+ras-commander==0.99.1
+pywin32==312
+geopandas==1.1.4
+shapely==2.1.2
+pyproj==3.7.2
+rasterio==1.5.1
+matplotlib==3.11.1
+pillow==12.3.0
+plotly==6.9.0
+streamlit==1.61.1
+openpyxl==3.1.5

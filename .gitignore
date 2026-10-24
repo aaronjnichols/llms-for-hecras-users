@@ -1,0 +1,34 @@
+# Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.tmp/
+/tmp/
+/pytest-cache-files-*/
+.playwright-cli/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+.codex/
+.aws/
+
+# Model inputs are distributed as release assets, not Git source files.
+/data/
+
+# Disposable HEC-RAS copies and generated course artifacts
+/work/
+/outputs/
+/dist/
+*.zip
+*.7z
+
+# Editor and operating-system noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
