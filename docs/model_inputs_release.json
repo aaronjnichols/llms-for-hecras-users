@@ -1,34 +1,34 @@
 {
-  "version": "v0.1.0",
-  "created_utc": "2026-10-24T19:24:51.372653+00:00",
+  "version": "v0.1.1",
+  "created_utc": "2026-10-26T23:24:13.679418+00:00",
   "archives": [
     {
-      "name": "beaver-creek-inputs-v0.1.0.zip",
-      "bytes": 318101,
-      "sha256": "a56c0f289053896e3834b001d7f3625458aa9f8a034505b6c1a994b70e128f28",
-      "model_files": 10
+      "name": "beaver-creek-inputs-v0.1.1.zip",
+      "bytes": 297338,
+      "sha256": "04d22ebf59e0727997a33c07179c7388c1b2bd7fdc254e6229027e5f29794353",
+      "model_files": 7
     },
     {
-      "name": "davis-inputs-v0.1.0.zip",
-      "bytes": 1397165,
-      "sha256": "119e54f3deb1a131caae71c8ee575040bf22e6bf69a24d171a89d9666af31dbb",
+      "name": "davis-inputs-v0.1.1.zip",
+      "bytes": 1397164,
+      "sha256": "68cf1d4aa964372ecbdb9be413891453510a50789ce4f2e930529be1d2f8ee6b",
       "model_files": 15
     }
   ],
-  "stage_manifest_sha256": "2e7807aa75c58953da3563ded8aa2fb9a0524def9fe622d87e72213ca8b972f3",
-  "tag": "model-inputs-v0.1.0",
-  "release_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.0",
+  "stage_manifest_sha256": "0c1dee3bcc10de826c63835c2c3520d8bd0c616cda712cbeb224b597892ba96d",
+  "tag": "model-inputs-v0.1.1",
+  "release_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.1",
   "engine": "HEC-RAS 7.0.1 June 2026",
   "packages": [
     {
-      "name": "beaver-creek-inputs-v0.1.0.zip",
-      "bytes": 318101,
-      "sha256": "a56c0f289053896e3834b001d7f3625458aa9f8a034505b6c1a994b70e128f28",
-      "model_files": 10,
-      "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.0/beaver-creek-inputs-v0.1.0.zip",
+      "name": "beaver-creek-inputs-v0.1.1.zip",
+      "bytes": 297338,
+      "sha256": "04d22ebf59e0727997a33c07179c7388c1b2bd7fdc254e6229027e5f29794353",
+      "model_files": 7,
+      "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.1/beaver-creek-inputs-v0.1.1.zip",
       "project_path": "data/Example_Projects_7_0/Applications Guide/Example 2 - Beaver Creek/BEAVCREK.prj",
       "package_metadata": {
-        "package_version": "v0.1.0",
+        "package_version": "v0.1.1",
         "model": "beaver-creek",
         "purpose": "May 1974 steady-profile cross-section export and plotting.",
         "source": "data/Example_Projects_7_0/Applications Guide/Example 2 - Beaver Creek",
@@ -39,8 +39,7 @@
         "distribution_policy": "https://www.hec.usace.army.mil/software/distribution_policy.aspx",
         "terms": "https://www.hec.usace.army.mil/software/terms_and_conditions.aspx",
         "plans": [
-          "01",
-          "02"
+          "01"
         ],
         "units": "US Customary",
         "extract_under": "data/",
@@ -49,22 +48,16 @@
           "BEAVCREK.f01": "ce34b2bb67802e9f29aa63a3b3d81ba98d002c378ba38f7f0a0126f852e95408",
           "BEAVCREK.g01": "a17d053002703a50fa2c3e00b982cd3171b99c917ffdc237854fc50fa3e96b37",
           "BEAVCREK.g01.hdf": "b597964f5d82f80cd24bef2243e099046a94609176b9a26dd51c37bca987c5df",
-          "BEAVCREK.g02": "4ed7a2c8bc8852b6f4eae914add88ab3b621d81e596cfce286b50b2c3427c7da",
-          "BEAVCREK.g02.hdf": "9fd0a720bd7f1a76557d817780a95e2035880a14b023dfd0824eae1fa7735211",
           "BEAVCREK.p01": "e239cda4f4d6aebe6a81f8c993fe47bc08aadbd18d41f8e8f5ecf229d61f9166",
-          "BEAVCREK.p02": "7ebc5e719615a74e1b3fa4dc6f3b97f647b230547ac594f6fe643aef9b404d32",
-          "BEAVCREK.prj": "6bf9f0a6776f677c90e1f87e40292234612269867aa3efd5b21acc7a00995cce",
-          "BEAVCREK.rasmap": "393ed8d0de94e6806499410dd103884b011c7bac30927749bfe40a168e31aef1"
+          "BEAVCREK.prj": "2bba2ff696f320a6853a1abb1ce6b9b4826e5ffa4e281e523a8c403644e8a576",
+          "BEAVCREK.rasmap": "d049ee85892b12385d760be1061108eb3acf5f05aadd7ee30a09de3d667440f3"
         },
         "original_file_sha256": {
           "BCREEK.BMP": "bfc416619e468c2b37e73d37f586a8a8cf2cca5390af872f1de8d7226f3c24ef",
           "BEAVCREK.f01": "ce34b2bb67802e9f29aa63a3b3d81ba98d002c378ba38f7f0a0126f852e95408",
           "BEAVCREK.g01": "a17d053002703a50fa2c3e00b982cd3171b99c917ffdc237854fc50fa3e96b37",
           "BEAVCREK.g01.hdf": "b597964f5d82f80cd24bef2243e099046a94609176b9a26dd51c37bca987c5df",
-          "BEAVCREK.g02": "4ed7a2c8bc8852b6f4eae914add88ab3b621d81e596cfce286b50b2c3427c7da",
-          "BEAVCREK.g02.hdf": "9fd0a720bd7f1a76557d817780a95e2035880a14b023dfd0824eae1fa7735211",
           "BEAVCREK.p01": "e239cda4f4d6aebe6a81f8c993fe47bc08aadbd18d41f8e8f5ecf229d61f9166",
-          "BEAVCREK.p02": "7ebc5e719615a74e1b3fa4dc6f3b97f647b230547ac594f6fe643aef9b404d32",
           "BEAVCREK.prj": "9b0bc1eb7b1443d8ff641845b61e892ca65802555dc7dc70df157e89012e1590",
           "BEAVCREK.rasmap": "5f877ee77bf4853d6f7290fb3537aa5d386710456ca79a836e1fb559e06c9fe9"
         },
@@ -81,11 +74,14 @@
           "BEAVCREK.dsc",
           "BEAVCREK.dss",
           "BEAVCREK.f02",
+          "BEAVCREK.g02",
+          "BEAVCREK.g02.hdf",
           "BEAVCREK.g03",
           "BEAVCREK.g03.hdf",
           "BEAVCREK.g04",
           "BEAVCREK.g04.hdf",
           "BEAVCREK.h01",
+          "BEAVCREK.p02",
           "BEAVCREK.p03",
           "BEAVCREK.p04"
         ],
@@ -97,14 +93,14 @@
       }
     },
     {
-      "name": "davis-inputs-v0.1.0.zip",
-      "bytes": 1397165,
-      "sha256": "119e54f3deb1a131caae71c8ee575040bf22e6bf69a24d171a89d9666af31dbb",
+      "name": "davis-inputs-v0.1.1.zip",
+      "bytes": 1397164,
+      "sha256": "68cf1d4aa964372ecbdb9be413891453510a50789ce4f2e930529be1d2f8ee6b",
       "model_files": 15,
-      "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.0/davis-inputs-v0.1.0.zip",
+      "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.1/davis-inputs-v0.1.1.zip",
       "project_path": "data/Example_Projects_7_0/Pipes/Davis/DavisStormSystem.prj",
       "package_metadata": {
-        "package_version": "v0.1.0",
+        "package_version": "v0.1.1",
         "model": "davis",
         "purpose": "Pipe results, pump flows, reporting intervals, design storms, and GIS inputs.",
         "source": "data/Example_Projects_7_0/Pipes/Davis",
@@ -186,18 +182,7 @@
       "model": "beaver-creek",
       "plan": "01",
       "engine": "HEC-RAS 7.0.1 June 2026",
-      "duration_seconds": 8.7,
-      "dataset": "Results/Steady/Output/Output Blocks/Base Output/Steady Profiles/Cross Sections/Water Surface",
-      "dataset_shape": [
-        3,
-        14
-      ]
-    },
-    {
-      "model": "beaver-creek",
-      "plan": "02",
-      "engine": "HEC-RAS 7.0.1 June 2026",
-      "duration_seconds": 5.267,
+      "duration_seconds": 7.303,
       "dataset": "Results/Steady/Output/Output Blocks/Base Output/Steady Profiles/Cross Sections/Water Surface",
       "dataset_shape": [
         3,
@@ -208,7 +193,7 @@
       "model": "davis",
       "plan": "02",
       "engine": "HEC-RAS 7.0.1 June 2026",
-      "duration_seconds": 234.851,
+      "duration_seconds": 167.376,
       "dataset": "Results/Unsteady/Output/Output Blocks/Base Output/Unsteady Time Series/Time",
       "dataset_shape": [
         217
@@ -217,20 +202,21 @@
   ],
   "independent_review": {
     "approved": true,
-    "reviewer": "/root/verify_course_model_inputs",
-    "stage_manifest_sha256": "2e7807aa75c58953da3563ded8aa2fb9a0524def9fe622d87e72213ca8b972f3",
-    "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.0/independent_review.json"
+    "reviewer": "Independent Codex reviewer /root/review_plan01",
+    "stage_manifest_sha256": "0c1dee3bcc10de826c63835c2c3520d8bd0c616cda712cbeb224b597892ba96d",
+    "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.1/independent_review.json"
   },
   "limitations": [
-    "Approval covers input-package selection, source preservation, file dependencies, fresh computation completion, and inspected lesson data.",
-    "This review is not calibration, convergence testing, design verification, or confirmation that all hydraulic outputs are physically correct.",
-    "Native HEC-RAS plot dialogs and full end-to-end lesson UI workflows were not exercised by this reviewer.",
-    "Davis derived design-storm and reporting-interval comparison plans are created by course scripts and were not independently recomputed in this package review."
+    "Approval covers this staged input selection and permission to build its archives. Final archive extraction and publication checks remain Task 2 and Task 3 work.",
+    "The reviewer inspected fresh computations and independently read their current HDF outputs. The reviewer did not run HEC-RAS a second time.",
+    "Source preservation is measured against the staging manifest. The original upstream archive checksum is unavailable.",
+    "Computation completion and readable lesson datasets do not establish calibration, design suitability, or engineering validity."
   ],
   "warnings": [
-    "Davis reports overall volume-accounting error 0.1296 percent. This is an extracted run statistic, not an acceptance threshold.",
-    "Davis node O13-DMH024 has no finite node-WSE samples in the BaseOutput series.",
-    "Davis Pipe 14 uses Instantaneous modeling and has no pipe-cell results; its endpoint flow/velocity series contain NaN. The existing screening extractor preserves this as missing output.",
-    "The original upstream archive checksum is not available. Each packaged source file is identified by its local-source SHA-256."
+    "Beaver has no defined CRS. The reader warning is expected. No CRS was assigned.",
+    "Davis node O13-DMH024 has missing water-surface values. This is an extracted fact, not acceptance of hydraulic behavior.",
+    "Davis messages report volume accounting error of 0.1845 acre-ft and 0.1296 percent. These are recorded facts, not design acceptance.",
+    "The course environment uses Python 3.13.5. The recorded course target is 3.13.15. The environment check accepts Python 3.13.x.",
+    "Initial sandbox computation failed to start HEC-RAS. Fresh successful run evidence uses separate disposable copies. Initial pytest failed at temporary-directory setup; the retry passed."
   ]
 }
