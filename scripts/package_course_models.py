@@ -22,20 +22,17 @@ import h5py
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
-VERSION = "v0.1.0"
+VERSION = "v0.1.1"
 MODELS = {
     "beaver-creek": {
         "directory": "Example_Projects_7_0/Applications Guide/Example 2 - Beaver Creek",
         "stem": "BEAVCREK",
-        "plans": ["01", "02"],
+        "plans": ["01"],
         "files": [
             "BEAVCREK.prj",
             "BEAVCREK.p01",
-            "BEAVCREK.p02",
             "BEAVCREK.g01",
-            "BEAVCREK.g02",
             "BEAVCREK.g01.hdf",
-            "BEAVCREK.g02.hdf",
             "BEAVCREK.f01",
             "BEAVCREK.rasmap",
             "BCREEK.BMP",
@@ -119,6 +116,16 @@ def check_model_files(root: Path, model: dict[str, Any]) -> None:
         raise ValueError(
             f"Input file selection differs: missing={expected - actual}, extra={actual - expected}"
         )
+    # Check actual project and plan references, not only the file allowlist.
+    for path in [*root.glob("*.prj"), *root.glob("*.p[0-9][0-9]")]:
+        for line in path.read_text(encoding="utf-8", errors="strict").splitlines():
+            key, separator, value = line.partition("=")
+            if separator and key in {"Current Plan", "Plan File", "Geom File", "Flow File"}:
+                dependency = root / f"{path.stem}.{value.strip()}"
+                if not dependency.is_file():
+                    raise ValueError(
+                        f"Missing project or plan input: {path.name}: {dependency.name}"
+                    )
     for path in root.rglob("*.hdf"):
         with h5py.File(path, "r") as hdf:
             if "Results" in hdf:
@@ -160,7 +167,7 @@ def stage_inputs(stage_root: Path, ras_exe: Path) -> None:
                 hide_intro=True,
                 accept_tcu=False,
             )
-            for number in ["03", "04"]:
+            for number in ["02", "03", "04"]:
                 RasPlan.delete_plan(number, ras_object=ras)
                 RasPlan.delete_geom(number, ras_object=ras)
             RasPlan.delete_steady("02", ras_object=ras)

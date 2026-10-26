@@ -6,7 +6,7 @@ runs. Preserve all source files under `data/`. Compute a complete copy under `wo
 
 | Package | Plans to compute | Course use |
 | --- | --- | --- |
-| Beaver Creek | 01, Press/Weir Method; 02, Energy Method | Export and plot the May 1974 cross-section results |
+| Beaver Creek | 01, Press/Weir Method | Export and plot the May 1974 cross-section results |
 | Davis storm system | 02, Full System ROM with Pump | Inspect pipe and pump results; prepare reporting-interval, storm, and GIS exercises |
 
 The whole-corpus runner is an instructor utility. Students do not need the other example
@@ -53,7 +53,7 @@ The existing runner accepts one selected plan. For example, after a verified cop
   --result 'outputs/beaver_first_run/plan01.json'
 ```
 
-Repeat for plan 02 if the lesson compares the two methods. For Davis, select plan 02 from
+For Beaver Creek, compute plan 01 only. For Davis, select plan 02 from
 the copied `DavisStormSystem.prj`. An agent that calls the runner must use a time limit and
 retain the log. The packaging check uses a 900-second limit per plan. This limit is not a
 prediction of run time on a student's computer.
@@ -65,8 +65,8 @@ update the script inputs as part of the lesson.
 
 ## What the packages retain
 
-- Beaver Creek contains the two selected plans, their geometry text and HDF files, their
-  common steady-flow file, the project and Mapper files, and the bridge photograph referenced
+- Beaver Creek contains one selected plan, its geometry text and HDF files, its
+  steady-flow file, the project and Mapper files, and the bridge photograph referenced
   by the geometry. The source has no defined CRS. Preserve its coordinates; do not assign a
   guessed EPSG code or use them for geographic distance or area calculations.
 - Davis contains the selected plan, project, geometry text and HDF, unsteady-flow text and

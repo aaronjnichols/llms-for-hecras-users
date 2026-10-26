@@ -85,3 +85,16 @@ def test_model_selection_rejects_an_extra_result_file(tmp_path: Path):
     (tmp_path / "Test.p01.hdf").write_bytes(b"unexpected computation output")
     with pytest.raises(ValueError, match="Input file selection differs"):
         package.check_model_files(tmp_path, {"files": ["Test.prj"]})
+
+
+def test_staged_project_rejects_leftover_plan_dependency(tmp_path: Path):
+    project = tmp_path / "Sample.prj"
+    project.write_text("Current Plan=p01\nPlan File=p01\n", encoding="utf-8")
+    (tmp_path / "Sample.p01").write_text("Geom File=g01\nFlow File=f01\n", encoding="utf-8")
+    (tmp_path / "Sample.g01").write_text("Geometry\n", encoding="utf-8")
+    (tmp_path / "Sample.f01").write_text("Flow\n", encoding="utf-8")
+    model = {"files": list(package.file_hashes(tmp_path))}
+    package.check_model_files(tmp_path, model)
+    project.write_text(project.read_text() + "Plan File=p02\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="Sample.p02"):
+        package.check_model_files(tmp_path, model)
