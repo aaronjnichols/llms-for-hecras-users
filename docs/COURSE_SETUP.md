@@ -1,6 +1,7 @@
 # Course setup and first model runs
 
-This guide is the repository copy of Lesson 00. Use Windows and HEC-RAS 7.0.1.
+Use this lesson to prepare the course folder and compute the first model copies.
+Use Windows and HEC-RAS 7.0.1.
 Keep the lesson at draft stage until the instructor completes the checks at the end.
 
 ## Purpose and deliverables
@@ -341,18 +342,18 @@ exceeded the Windows path limit in a deep folder with the GitHub SHA directory s
 The failed log is `outputs/lesson00_20261026/fresh-install.log` in the instructor evidence.
 The procedure now requires a short course root and archive flattening before installation.
 The short-folder retry passed with fresh CPython 3.13.15. Package installation took 199.367
-seconds and the environment check took 4.321 seconds. The final local candidate test suite passed all 72 tests in 6.539 seconds.
+seconds and the environment check took 4.321 seconds. That historical candidate test suite passed all 72 tests in 6.539 seconds.
 The setup helper downloaded, verified, and installed both model inputs. Its log is
 `outputs/lesson00_20261026/candidate-prepare.log` in the instructor evidence.
 These observations do not claim that the interactive Python installer succeeded. That test
 stopped when the installer proposed an upgrade of an existing all-users installation.
-The final local candidate record is `outputs/lesson00_20261026/candidate-rehearsal.json`.
+The historical local candidate record is `outputs/lesson00_20261026/candidate-rehearsal.json`.
 It reports `success: true`. The candidate used public revision
 `4c1535384d9c21ef707656ea8a249029f74686a6` with local support files added after installation.
 The record identifies those local files by checksum. This was a local candidate test.
 It was not a test of the final public support files alone.
 
-| Final candidate operation | Duration, seconds | Result |
+| Historical candidate operation | Duration, seconds | Result |
 | --- | ---: | --- |
 | Environment check | 4.120 | Passed |
 | All 72 tests | 6.539 | Passed |
@@ -363,7 +364,9 @@ It was not a test of the final public support files alone.
 | Davis result check | 3.379 | Passed |
 
 Ruff, format checks, and `pip check` also passed. Both run records report unchanged source
-files. Both result HDF checks passed. The Davis check retained the known missing series.
+files. Both result HDF checks returned success at that stage.
+The later index audit supersedes their named-node extraction facts.
+The original records remain available. They do not establish corrected node identification.
 These durations measure commands on the instructor computer. They are not student time limits.
 
 The executable check retained raw Windows version `7.0.0.1` and release `7.0.1` separately.
@@ -375,7 +378,56 @@ Screenshots are under `outputs/lesson00_20261026/screenshots/`.
 The first public-source agent test passed all four prompts and 72 tests.
 Its report is `work/L00 Public/outputs/rehearsal-report.md`.
 Its named-node facts used the old reader. The index correction supersedes those facts.
-The final public-source checks with the corrected reader remain pending.
+The final public-source checks with the corrected reader passed. See the final test record below.
+
+### Final public-source test
+
+The corrected support code was tested at public revision
+`69395ffaeaec85d4ccd2d4f01835bf80cd719e79`.
+The source ZIP SHA-256 was
+`add5afa0d15357f84ae01ed6815dcbe8d4585f3b016d4920ef961917e95e07ac`.
+The release correction JSON and Markdown files are public and verified.
+The eight original release assets remain unchanged.
+
+A fresh agent completed all four prompts in `work/L00 Final/`.
+It used a new `.venv` with registered standard CPython 3.13.5 x64.
+No Python installer ran. This follows the rule to reuse a compatible installed Python 3.13.x.
+All 37 downloaded source files matched the ZIP and their initial checksums after the test.
+No downloaded course code changed.
+
+The final reports are `work/L00 Final/outputs/rehearsal-report.md` and
+`work/L00 Final/outputs/rehearsal-report.json`.
+
+| Final public operation | Duration, seconds | Result |
+| --- | ---: | --- |
+| Binary-wheel package installation | 216.887 | Passed |
+| Environment check | 22.971 | Passed |
+| All 89 tests, complete command | 8.400 | Passed |
+| Prepare inputs | 1.803 | Passed |
+| Beaver Creek run command | 7.018 | Passed |
+| Beaver Creek result check | 3.065 | Passed |
+| Davis run command | 146.296 | Passed |
+| Davis result check | 2.962 | Passed |
+
+Pytest reported 7.18 seconds for its internal test run. The complete command took 8.400 seconds.
+Ruff, format checks, and `pip check` passed.
+Both model runs and corrected result checks passed. Sources remained unchanged.
+Davis had 217 rows over 36 hours at 600-second intervals.
+The mapped `O14-DMH047` maximum was 39.88738 ft at 19:30 on January 10, 2000.
+All 133 inlet series, pump values, and selected node and pipe series passed finite-value checks.
+The check retained 217 missing values at `O13-DI020` and 217 at instantaneous Pipe 14.
+It did not replace missing values with zeros.
+Volume accounting reported 0.1845 acre-feet and 0.1296 percent error. No acceptance limit was added.
+
+A separate 1-second timeout test returned the expected failure exit code 1 in 1.689 seconds.
+Its run record reports `TimeoutExpired` and unchanged sources.
+It retained its log and separate working copy under
+`work/L00 Final/outputs/lesson00_20261027T003841Z_86f2333b/beaver-creek/`.
+That failure does not change the successful model records.
+
+The first restricted environment attempt failed in ensurepip. A scoped permission retry passed.
+The first public metadata request failed to resolve its host. A scoped network retry passed.
+The report preserves both failures. These retries did not require blanket full access.
 
 The October 26 index audit found the missing node was `O13-DI020`.
 It has global row 94 and network result column 119.
