@@ -24,7 +24,7 @@ See [docs/TECHNICAL_BASELINE.md](docs/TECHNICAL_BASELINE.md) for package choices
 policy.
 
 HEC-RAS model inputs are separate downloads distributed as versioned ZIP assets through GitHub
-Releases. They are not included in the repository. Extract the required lesson package under
+Releases. They are not included in the repository. Use the Lesson 00 setup helper to verify and install the required packages under
 `data/`, then compute a disposable copy under `work/` to produce results.
 
 Download the checked [Beaver Creek and Davis input packages](https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.1).
@@ -34,21 +34,27 @@ See [docs/MODEL_INPUTS.md](docs/MODEL_INPUTS.md) for installation and run steps,
 See [docs/MODEL_DATA_WORKFLOW.md](docs/MODEL_DATA_WORKFLOW.md) for the model download layout
 and student instructions for an agent-assisted model run.
 
-## Windows setup
+## Start with Lesson 00
 
-Install the 64-bit Python 3.13.15 release from Python.org, then run these commands in PowerShell
-from the repository root:
+Use [Course setup and first model runs](docs/COURSE_SETUP.md). The student selects a local
+Windows folder. Codex obtains the public course source ZIP. It records the exact revision.
+It prepares Python and executes the course commands. Git and a GitHub account are not required.
+
+Use standard 64-bit CPython 3.13.15 for the recorded environment. Compatible 3.13.x patch
+releases are accepted. Use the explicit `.venv` executable for every course command.
+The agent installs the environment with:
 
 ```powershell
-py -3.13 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe scripts\check_environment.py
+.\.venv\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-dev.txt -c requirements-windows-py313.txt
+.\.venv\Scripts\python.exe scripts/check_environment.py
+.\.venv\Scripts\python.exe scripts/course_setup.py prepare
 ```
 
-Use `.\.venv\Scripts\python.exe` in place of `python` if the virtual environment is not
-activated. The environment check validates both pinned versions and real imports, including the
-compiled GIS libraries.
+The setup helper verifies both published model packages before it installs either source.
+It refuses partial or different existing source folders. The `run` command makes a complete
+new work copy and requires HEC-RAS 7.0.1. The `check` command checks an explicit run folder.
+Follow the guide for the sequential Beaver Creek and Davis prompts and native result review.
+These checks do not establish engineering validity.
 
 ## Repository layout
 

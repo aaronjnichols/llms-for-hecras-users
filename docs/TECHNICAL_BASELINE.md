@@ -47,10 +47,17 @@ it is the newest feature series.
 `requirements.txt` and `requirements-dev.txt` are the installation sources of truth. The table
 above explains the pins but does not replace them.
 
-These files pin direct dependencies, not every transitive package. Before the course is recorded
-or released to students, resolve the environment on a clean Windows machine, run all lessons,
-and capture a fully resolved lock or constraints file. Do not publish an untested lock merely to
-claim complete reproducibility.
+The direct requirement files pin the packages used by course code. The Windows constraints
+file, `requirements-windows-py313.txt`, records the resolved package versions for the tested
+64-bit CPython 3.13 environment. Install with both files:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-dev.txt -c requirements-windows-py313.txt
+```
+
+See [COURSE_SETUP.md](COURSE_SETUP.md) for the agent-assisted setup and HEC-RAS 7.0.1 run
+procedure. A resolved package list does not prove that every lesson works. Keep fresh-install,
+lesson-run, and clean-Windows test coverage separate in the release evidence.
 
 ## Packages not in the baseline
 
