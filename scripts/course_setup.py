@@ -428,12 +428,16 @@ def lesson_results(result: Path, model: str, output: Path) -> dict:
     from export_beaver_creek_may74_xs import PROFILE_NAME, extract_cross_sections
     from plot_davis_inlet_vs_pump import INLET_FLOW, PUMP_RESULTS
     from report_davis_output_interval import (
+        CONDUIT_INDICES,
         NODE_ATTRS,
+        NODE_INDICES,
         NODE_WSE,
         PIPE_ATTRS,
         PIPE_FLOW,
         decode,
+        network_indices,
         read_series,
+        result_column,
         unique_index,
     )
 
@@ -483,6 +487,13 @@ def lesson_results(result: Path, model: str, output: Path) -> dict:
         else:
             nodes = hdf[NODE_ATTRS][:]
             pipes = hdf[PIPE_ATTRS][:]
+            node_indices = network_indices(hdf, NODE_INDICES, nodes)
+            conduit_indices = network_indices(hdf, CONDUIT_INDICES, pipes)
+            if hdf[NODE_WSE].shape != (217, len(node_indices)) or hdf[PIPE_FLOW].shape != (
+                217,
+                len(conduit_indices),
+            ):
+                raise ValueError("Network result columns differ from the explicit maps.")
             for path, columns, units in ((INLET_FLOW, 133, "cfs"), (PUMP_RESULTS, 5, None)):
                 dataset = hdf[path]
                 if (
@@ -509,11 +520,22 @@ def lesson_results(result: Path, model: str, output: Path) -> dict:
                     "shape": list(dataset.shape),
                     "attributes": {key: str(value) for key, value in dataset.attrs.items()},
                 }
-            facts["missing_node_O13-DMH024_values"] = int(
-                np.count_nonzero(~np.isfinite(hdf[NODE_WSE][:, unique_index(nodes, "O13-DMH024")]))
-            )
+            facts["node_missing_value_coverage"] = [
+                {
+                    "name": decode(nodes[int(geometry_index)]["Name"]),
+                    "geometry_index_zero_based": int(geometry_index),
+                    "result_column_zero_based": column,
+                    "missing_values": int(np.count_nonzero(~np.isfinite(hdf[NODE_WSE][:, column]))),
+                }
+                for column, geometry_index in enumerate(node_indices)
+                if not np.isfinite(hdf[NODE_WSE][:, column]).all()
+            ]
             facts["instantaneous_Pipe_14_missing_values"] = int(
-                np.count_nonzero(~np.isfinite(hdf[PIPE_FLOW][:, unique_index(pipes, "14")]))
+                np.count_nonzero(
+                    ~np.isfinite(
+                        hdf[PIPE_FLOW][:, result_column(conduit_indices, unique_index(pipes, "14"))]
+                    )
+                )
             )
             facts["volume_accounting_messages"] = [
                 line

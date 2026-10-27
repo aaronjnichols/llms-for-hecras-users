@@ -30,6 +30,8 @@ DSS = f"{BLOCKS}/DSS Hydrograph Output/Unsteady Time Series"
 BASE = f"{BLOCKS}/Base Output/Unsteady Time Series"
 PIPE_ATTRS = "Geometry/Pipe Conduits/Attributes"
 NODE_ATTRS = "Geometry/Pipe Nodes/Attributes"
+NODE_INDICES = "Geometry/Pipe Networks/Davis/Node Indices"
+CONDUIT_INDICES = "Geometry/Pipe Networks/Davis/Conduit Indices"
 PIPE_FLOW = f"{DSS}/Pipe Networks/Davis/Pipes/Pipe Flow DS"
 NODE_WSE = f"{DSS}/Pipe Networks/Davis/Nodes/Water Surface"
 BOUNDARY = f"{DSS}/2D Flow Areas/DS Channel/Boundary Conditions/DS Normal"
@@ -75,6 +77,33 @@ def unique_index(records: np.ndarray, name: str) -> int:
     return indices[0]
 
 
+def network_indices(hdf: h5py.File, path: str, records: np.ndarray) -> np.ndarray:
+    """Read the explicit result-column to global-geometry index map."""
+    if path not in hdf:
+        raise ValueError(f"Missing network index map: {path}")
+    indices = hdf[path][:]
+    if (
+        indices.ndim != 1
+        or not np.issubdtype(indices.dtype, np.integer)
+        or not len(indices)
+        or len(np.unique(indices)) != len(indices)
+        or np.any(indices < 0)
+        or np.any(indices >= len(records))
+    ):
+        raise ValueError(f"Invalid network index map: {path}")
+    if any(decode(records[int(index)]["System Name"]) != "Davis" for index in indices):
+        raise ValueError(f"Network map refers to another system: {path}")
+    return indices
+
+
+def result_column(indices: np.ndarray, geometry_index: int) -> int:
+    """Invert a validated map for one selected geometry record."""
+    columns = np.flatnonzero(indices == geometry_index)
+    if len(columns) != 1:
+        raise ValueError(f"Geometry index {geometry_index} is absent from the network map.")
+    return int(columns[0])
+
+
 def read_series(path: Path, seconds: int) -> tuple[pd.DataFrame, dict]:
     """Validate identifiers, units, time axes and finite values before extraction."""
     with h5py.File(path, "r") as hdf:
@@ -82,11 +111,15 @@ def read_series(path: Path, seconds: int) -> tuple[pd.DataFrame, dict]:
             raise ValueError("This lesson requires US Customary output.")
         pipes = hdf[PIPE_ATTRS][:]
         nodes = hdf[NODE_ATTRS][:]
+        conduit_indices = network_indices(hdf, CONDUIT_INDICES, pipes)
+        node_indices = network_indices(hdf, NODE_INDICES, nodes)
         pipe_index = unique_index(pipes, "67")
         node_name = decode(pipes[pipe_index]["US Node"])
         if node_name != "O14-DMH047":
             raise ValueError(f"Unexpected Pipe 67 upstream node: {node_name}")
         node_index = unique_index(nodes, node_name)
+        pipe_column = result_column(conduit_indices, pipe_index)
+        node_column = result_column(node_indices, node_index)
         time_seconds = hdf[f"{DSS}/Time"][:] * 86400
         rounded = np.rint(time_seconds).astype(np.int64)
         if not np.allclose(time_seconds, rounded, atol=1e-5, rtol=0):
@@ -97,9 +130,9 @@ def read_series(path: Path, seconds: int) -> tuple[pd.DataFrame, dict]:
         timestamps = pd.to_datetime(dates, format="%d%b%Y %H:%M:%S")
         if not np.array_equal((timestamps - timestamps[0]).total_seconds(), rounded):
             raise ValueError("Date stamps do not agree with this output block's numeric times.")
-        if hdf[PIPE_FLOW].shape != (len(rounded), len(pipes)):
+        if hdf[PIPE_FLOW].shape != (len(rounded), len(conduit_indices)):
             raise ValueError("Pipe result dimensions do not match time and geometry identifiers.")
-        if hdf[NODE_WSE].shape != (len(rounded), len(nodes)):
+        if hdf[NODE_WSE].shape != (len(rounded), len(node_indices)):
             raise ValueError("Node result dimensions do not match time and geometry identifiers.")
         if decode(hdf[PIPE_FLOW].attrs["Units"]) != "ft^3/s":
             raise ValueError("Unexpected pipe discharge unit.")
@@ -118,8 +151,8 @@ def read_series(path: Path, seconds: int) -> tuple[pd.DataFrame, dict]:
                 "time_seconds": rounded,
                 "elapsed_hours": rounded / 3600,
                 "timestamp": timestamps,
-                "pipe_flow_cfs": hdf[PIPE_FLOW][:, pipe_index],
-                "node_wse_ft": hdf[NODE_WSE][:, node_index],
+                "pipe_flow_cfs": hdf[PIPE_FLOW][:, pipe_column],
+                "node_wse_ft": hdf[NODE_WSE][:, node_column],
                 "boundary_flow_cfs": hdf[BOUNDARY][:, 1],
                 "boundary_wse_ft": hdf[BOUNDARY][:, 0],
             }
@@ -161,6 +194,12 @@ def read_series(path: Path, seconds: int) -> tuple[pd.DataFrame, dict]:
             "geometry": geometry,
             "pipe_index_zero_based": pipe_index,
             "node_index_zero_based": node_index,
+            "pipe_result_column_zero_based": pipe_column,
+            "node_result_column_zero_based": node_column,
+            "network_index_maps": {
+                CONDUIT_INDICES: conduit_indices.tolist(),
+                NODE_INDICES: node_indices.tolist(),
+            },
             "pipe_us_node": node_name,
             "pipe_ds_node": decode(pipes[pipe_index]["DS Node"]),
             "pipe_shape": decode(pipes[pipe_index]["Shape"]),

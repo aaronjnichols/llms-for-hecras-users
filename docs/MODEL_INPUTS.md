@@ -73,10 +73,18 @@ update the script inputs as part of the lesson.
   event HDF, Mapper file, terrain HDF/GeoTIFF/VRT, projection, and profile-line shapefile set.
   The event HDF is an input. It is not a computed plan-result file.
 
-The fresh Davis check found missing result series at node `O13-DMH024` and at Pipe `14`.
+The fresh Davis check found missing result series at node `O13-DI020` and at Pipe `14`.
 That pipe uses the instantaneous modeling approach and has no pipe-cell results. The pipe
 screening script reports this condition. Preserve missing values and their coverage flags.
-Do not replace them with zeros. The selected lesson node `O14-DMH047` and all 133 inlet-flow
+Do not replace them with zeros.
+Read `/Geometry/Pipe Networks/Davis/Node Indices` before selecting node result columns.
+Read `/Geometry/Pipe Networks/Davis/Conduit Indices` before selecting conduit result columns.
+These maps connect network columns to global geometry rows. Equal counts do not prove equal order.
+The selected `O14-DMH047` is global row 76 and result column 67.
+The missing `O13-DI020` is global row 94 and result column 119.
+`O13-DMH024` is global row 119 and result column 2. Its results are finite.
+An October 26, 2026 extraction correction replaced the former missing-node attribution.
+It did not change model inputs or package hashes. See the release record's correction link. The selected lesson node `O14-DMH047` and all 133 inlet-flow
 series have finite values in the checked run. These checks do not establish design suitability.
 
 The package JSON lists every retained file and its source hash. It also lists exclusions.

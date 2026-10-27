@@ -214,9 +214,14 @@
   ],
   "warnings": [
     "Beaver has no defined CRS. The reader warning is expected. No CRS was assigned.",
-    "Davis node O13-DMH024 has missing water-surface values. This is an extracted fact, not acceptance of hydraulic behavior.",
+    "Davis node O13-DI020 has missing water-surface values. Node result columns must be mapped through /Geometry/Pipe Networks/Davis/Node Indices. O13-DMH024 has finite water-surface values. This is an extracted fact, not acceptance of hydraulic behavior.",
     "Davis messages report volume accounting error of 0.1845 acre-ft and 0.1296 percent. These are recorded facts, not design acceptance.",
     "The course environment uses Python 3.13.5. The recorded course target is 3.13.15. The environment check accepts Python 3.13.x.",
     "Initial sandbox computation failed to start HEC-RAS. Fresh successful run evidence uses separate disposable copies. Initial pytest failed at temporary-directory setup; the retry passed."
-  ]
+  ],
+  "result_index_correction": {
+    "date": "2026-10-26",
+    "download_url": "https://github.com/aaronjnichols/llms-for-hecras-users/releases/download/model-inputs-v0.1.1/davis-result-index-correction.json",
+    "summary": "Correct Davis named-node extraction with explicit Node Indices and Conduit Indices maps. No model input, archive, or package hash changed."
+  }
 }

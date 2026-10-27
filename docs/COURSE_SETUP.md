@@ -261,7 +261,13 @@ Report run.json, summary.md, work project, and result HDF paths.
 Check the 36-hour time range and 217 rows at 10-minute intervals.
 Check finite selected series for Pipe 67, node O14-DMH047, all 133 inlet series, and pump values.
 Record HDF dataset paths and units.
-Preserve and report missing node O13-DMH024 and instantaneous Pipe 14 series.
+Use /Geometry/Pipe Networks/Davis/Node Indices to map global node rows to network result columns.
+Use /Geometry/Pipe Networks/Davis/Conduit Indices for conduit columns.
+Record both indices and map paths.
+O14-DMH047 is global row 76 and result column 67.
+Pipe 67 is global row 65 and result column 65.
+Equal counts do not prove equal order.
+Preserve and report missing node O13-DI020 and instantaneous Pipe 14 series.
 Do not replace missing values with zeros.
 Extract volume accounting and computation messages.
 Report them without invented acceptance limits.
@@ -281,9 +287,14 @@ Check the window's project path before you open editors. Do not open the source 
 1. For Beaver Creek, select plan 01. Review its computation messages. Open a profile plot
    and a cross-section result table for `May '74 flood`. Compare one water-surface elevation
    and one total velocity with the check output. Confirm feet and feet per second.
-2. For Davis, select plan 02. Review its computation messages and volume accounting.
-   Open the result plots for Pipe 67 and node `O14-DMH047`. Check the plotted time range
-   against the 36-hour result record. Review the reported missing-series limits.
+2. For Davis, select plan 02. Review computation messages and volume accounting.
+   Use **View > Stage and Flow Hydrographs** to open RasPlotDriver.
+   Set NodeType to **Pipe Conduit Ends**. Select row **67** for Pipe 67 endpoint flows.
+   Do not select **Pipe Conduits** for these Stage and Flow time series.
+   Set NodeType to **Pipe Nodes**. Select **O14-DMH047** for its water surface.
+   The tested 10-minute output shows 39.89 ft maximum at 19:30.
+   Compare the plotted time range with the 36-hour result record.
+   Review the reported missing-series limits.
 3. Close editors without saving. Do not change model settings during this review.
 4. Ask the agent to record which native results you checked and any difference. Retain a
    screenshot with the plan and result labels visible. A screenshot of an empty app is insufficient.
@@ -359,6 +370,19 @@ The executable check retained raw Windows version `7.0.0.1` and release `7.0.1` 
 A native Windows junction test confirmed rejection of the linked directory. Native file
 symlink creation was unavailable in the test session. That native test remains unverified.
 
-Native HEC-RAS plot review and the final public-source agent test remain pending.
+The native check confirmed the selected 10-minute node maximum as 39.89 ft at 19:30.
+Screenshots are under `outputs/lesson00_20261026/screenshots/`.
+The first public-source agent test passed all four prompts and 72 tests.
+Its report is `work/L00 Public/outputs/rehearsal-report.md`.
+Its named-node facts used the old reader. The index correction supersedes those facts.
+The final public-source checks with the corrected reader remain pending.
+
+The October 26 index audit found the missing node was `O13-DI020`.
+It has global row 94 and network result column 119.
+`O13-DMH024` has global row 119 and result column 2. Its water-surface series is finite.
+The former 42.385-ft selected-node values belonged to `O12-DMH009`.
+Use the explicit index maps and corrected checks. Do not retain the former named-node claims.
+Independent evidence is `outputs/lesson00_20261026/index-audit/independent-results.json`.
+The original HDF files and receipts remain unchanged.
 App installation, sign-in, app folder selection, and clean-Windows checks also remain pending.
 Keep the lesson at draft stage.
