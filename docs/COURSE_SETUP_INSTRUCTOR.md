@@ -18,7 +18,17 @@ All later course commands use `.venv/Scripts/python.exe`. Setup installs binary 
 
 `Run Models.cmd` calls `course_setup.py run-all`. The helper runs and checks Beaver Creek plan 01, then Davis plan 02, with a 900-second limit per model. It retains unique work copies and model records. It writes `run-all.json` and `FIRST_RUN_RESULTS.txt` under a unique `outputs/lesson00_<id>/` folder. The text file reports PASS or FAIL and exact project, result, and evidence paths. Setup logs use `outputs/setup_<id>/setup.log`.
 
-Task 1 reports that the environment check, Ruff, format check, and all 106 tests passed on October 30, 2026. The existing interpreter was CPython 3.13.5. Installer rejection tests used fixtures. No actual installer ran. Fresh-folder launcher runs and the public source ZIP check are pending root integration review. Do not describe these as completed until their evidence is recorded. Clean Windows installation and app setup checks remain open. Automated tests and successful computations do not establish engineering validity.
+The published launcher test passed on October 30, 2026, at revision `f7f0b579316aba034bddb1d629bc85b92c84271c`. The public ZIP export substitution supplied the exact source revision without Git. All 44 course source files and both source models remained unchanged. The environment check, Ruff, format check, pip consistency check, and all 109 tests passed. Pytest reported 39.85 seconds. Evidence is in `outputs/lesson00_simple_20261030/public-rehearsal.md` and `public-rehearsal.json`.
+
+| Public test operation | Duration, seconds | Result |
+| --- | ---: | --- |
+| Setup launcher | 227.535 | Passed |
+| Repeat setup | 11.564 | Passed |
+| Model launcher, both models and checks | 303.774 | Passed |
+| Beaver Creek plan 01 run | 17.434 | Passed |
+| Davis plan 02 run | 274.033 | Passed |
+
+The test removed Python and Git from PATH and supplied invalid inherited Python and pip settings. Setup reused registered standard x64 CPython 3.13.5. The supplied pip target did not redirect installation, and setup did not create the target folder. The completion message identified `FIRST_RUN_RESULTS.txt`. These command tests used `--no-pause`. No new native GUI review or manual double-click screenshot was made. No Python installer ran. A clean Windows test and a complete installer test remain open, so the lesson remains a draft. Optional Codex setup is not required for the two-button procedure. Computation and file checks do not establish engineering validity.
 
 ## Native result review details from the earlier procedure
 
