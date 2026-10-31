@@ -155,10 +155,15 @@ def run_course(course, monkeypatch):
 
 
 def fake_success(command, root, log, timeout):
+    assert command[1] == "-E", "The child runner must ignore inherited Python settings."
     project = Path(command[command.index("--project") + 1])
     plan = command[command.index("--plan") + 1]
     result = project.with_suffix(f".p{plan}.hdf")
     result.write_bytes(b"fixture result")
+    # Windows file time can precede time.time() by a few milliseconds.
+    # Give this simulated result an explicit time after the recorded start.
+    started = setup.read_json(Path(command[-1]).parent / "run.json")["started_epoch"]
+    os.utime(result, (started + 0.01, started + 0.01))
     setup.save_json(
         Path(command[-1]),
         {

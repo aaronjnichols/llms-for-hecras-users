@@ -93,6 +93,11 @@ def provenance(root: Path) -> dict:
         ):
             raise ValueError("course-source.json must state repository_url and the full revision.")
         return value
+    archive_marker = root / ".git_archival.txt"
+    if archive_marker.is_file():
+        revision = archive_marker.read_text(encoding="utf-8").strip()
+        if re.fullmatch("[0-9a-fA-F]{40}", revision):
+            return {"revision": revision.lower(), "method": "git archive export-subst"}
     try:
         revision = subprocess.run(
             ["git", "rev-parse", "HEAD"], cwd=root, check=True, capture_output=True, text=True
@@ -365,6 +370,7 @@ def run(root: Path, model: str, ras_exe: Path, timeout: int) -> Path:
         code = execute(
             [
                 sys.executable,
+                "-E",
                 str(root / "scripts/run_all_example_plans.py"),
                 "run-one",
                 "--project",
@@ -637,10 +643,66 @@ def check(root: Path, output: Path) -> dict:
     return facts
 
 
+def run_all(root: Path, ras_exe: Path) -> Path:
+    """Run and check the two selected lesson plans in order."""
+    runtime(root)
+    output = below(root / "outputs" / new_id(), root / "outputs")
+    summary = output_file(output, "run-all.json")
+    text_summary = output_file(output, "FIRST_RUN_RESULTS.txt")
+    output.mkdir(parents=True)
+    record = {"success": False, "source_code": provenance(root), "models": []}
+    print(f"Run summary: {text_summary}", flush=True)
+    try:
+        for model in PLANS:
+            print(f"Run {model}, plan {PLANS[model]}.", flush=True)
+            model_output = run(root, model, ras_exe, 900)
+            model_record = read_json(model_output / "run.json")
+            record["models"].append(
+                {
+                    "model": model,
+                    "plan": PLANS[model],
+                    "output": str(model_output),
+                    "project": model_record["project"],
+                    "result": model_record["result"],
+                    "checks_passed": False,
+                }
+            )
+            print(f"Result: {model_record['result']}\nWork project: {model_record['project']}")
+            check(root, model_output)
+            record["models"][-1]["checks_passed"] = True
+        record["success"] = True
+    except (OSError, ValueError, KeyError, StopIteration, subprocess.SubprocessError) as exc:
+        record["error"] = str(exc)
+        raise
+    finally:
+        save_json(output_file(output, summary.name), record)
+        lines = ["Course model results", "", "PASS" if record["success"] else "FAIL"]
+        for row in record["models"]:
+            lines.extend(
+                [
+                    "",
+                    f"Model: {row['model']}, plan {row['plan']}",
+                    f"Lesson checks passed: {row['checks_passed']}",
+                    f"Work project: {row['project']}",
+                    f"Result HDF: {row['result']}",
+                    f"Run evidence: {row['output']}",
+                ]
+            )
+        if "error" in record:
+            lines.extend(["", f"Failure: {record['error']}", "Keep all run files."])
+        lines.extend(["", "These checks do not establish engineering validity."])
+        output_file(output, text_summary.name).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("Model file and lesson data checks passed. Review the working models in HEC-RAS.")
+    print("These checks do not establish engineering validity.")
+    return summary
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("prepare")
+    all_parser = sub.add_parser("run-all")
+    all_parser.add_argument("--ras-exe", type=Path, default=DEFAULT_RAS_EXE)
     run_parser = sub.add_parser("run")
     run_parser.add_argument("--model", choices=PLANS, required=True)
     run_parser.add_argument("--ras-exe", type=Path, default=DEFAULT_RAS_EXE)
@@ -651,6 +713,9 @@ def main() -> int:
     try:
         if args.command == "prepare":
             print(f"Sources prepared. Receipt: {prepare(REPO)}")
+        elif args.command == "run-all":
+            summary = run_all(REPO, args.ras_exe)
+            print(f"Models complete. Read {summary.parent / 'FIRST_RUN_RESULTS.txt'}")
         elif args.command == "run":
             print(
                 f'Run complete. Use check --run "{run(REPO, args.model, args.ras_exe, args.timeout_seconds)}"'

@@ -16,6 +16,20 @@ Python 3.13 is a deliberate middle path: it is a maintained Windows release, whi
 scientific and Streamlit packages support it. Python 3.14 is not the course target even though
 it is the newest feature series.
 
+## Setup entry points
+
+Students use `Setup Course.cmd`, then `Run Models.cmd`. Both accept `--no-pause` for agents.
+The setup launcher uses built-in Windows PowerShell 5.1 because Python can be absent.
+This bootstrap script is the justified exception to the Python-only course tool rule.
+Its execution-policy flag applies to that process only. It does not change saved policy.
+It checks a short course root outside OneDrive and detects compatible registered Python.
+If none exists, it verifies and installs standard x64 CPython 3.13.15 for the current user.
+It creates `.venv`, installs binary wheels with the Windows constraints, checks the environment,
+and downloads the checked model inputs. Later course commands use only the course `.venv`.
+The model launcher runs and checks the two selected disposable model copies through Python.
+See [Instructor notes](COURSE_SETUP_INSTRUCTOR.md) for installer checks and test limits.
+No package pins or dependencies change for these entry points.
+
 ## Direct runtime dependencies
 
 | Package | Pinned version | Course use |
@@ -55,7 +69,7 @@ file, `requirements-windows-py313.txt`, records the resolved package versions fo
 .\.venv\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-dev.txt -c requirements-windows-py313.txt
 ```
 
-See [COURSE_SETUP.md](COURSE_SETUP.md) for the agent-assisted setup and HEC-RAS 7.0.1 run
+See [COURSE_SETUP.md](COURSE_SETUP.md) for the launcher setup and HEC-RAS 7.0.1 run
 procedure. A resolved package list does not prove that every lesson works. Keep fresh-install,
 lesson-run, and clean-Windows test coverage separate in the release evidence.
 

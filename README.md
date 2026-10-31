@@ -23,38 +23,23 @@ remain ordinary local tools; they do not call an LLM service themselves.
 See [docs/TECHNICAL_BASELINE.md](docs/TECHNICAL_BASELINE.md) for package choices and the update
 policy.
 
-HEC-RAS model inputs are separate downloads distributed as versioned ZIP assets through GitHub
-Releases. They are not included in the repository. Use the Lesson 00 setup helper to verify and install the required packages under
-`data/`, then compute a disposable copy under `work/` to produce results.
-
-Download the checked [Beaver Creek and Davis input packages](https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.1).
-See [docs/MODEL_INPUTS.md](docs/MODEL_INPUTS.md) for installation and run steps, and
-[docs/model_inputs_release.json](docs/model_inputs_release.json) for file lists and checksums.
-
-See [docs/MODEL_DATA_WORKFLOW.md](docs/MODEL_DATA_WORKFLOW.md) for the model download layout
-and student instructions for an agent-assisted model run.
-
 ## Start with Lesson 00
 
-Use [Course setup and first model runs](docs/COURSE_SETUP.md). The student selects a local
-Windows folder. Codex obtains the public course source ZIP. It records the exact revision.
-It prepares Python and executes the course commands. Git and a GitHub account are not required.
+Use Windows x64 with HEC-RAS 7.0.1 installed.
 
-Use standard 64-bit CPython 3.13.15 for the recorded environment. Compatible 3.13.x patch
-releases are accepted. Use the explicit `.venv` executable for every course command.
-The agent installs the environment with:
+1. On this GitHub repository, select **Code > Download ZIP**, then **Extract All**. Use the folder that contains `Setup Course.cmd`. Keep its full path short and outside OneDrive. Git users can clone instead.
+2. Double-click `Setup Course.cmd`. Wait for `SETUP COMPLETE. Next, open Run Models.cmd.`
+3. Double-click `Run Models.cmd`. Open the printed `FIRST_RUN_RESULTS.txt` path, confirm `PASS`, and review the listed working projects in HEC-RAS.
 
-```powershell
-.\.venv\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-dev.txt -c requirements-windows-py313.txt
-.\.venv\Scripts\python.exe scripts/check_environment.py
-.\.venv\Scripts\python.exe scripts/course_setup.py prepare
-```
+The repository contains course code. Setup downloads and verifies the separate Beaver Creek
+and Davis [model input release](https://github.com/aaronjnichols/llms-for-hecras-users/releases/tag/model-inputs-v0.1.1).
+It prepares Python and the pinned libraries. You do not need Git, Python commands, or an agent.
+Model runs use disposable copies under `work/`. Source models under `data/` remain unchanged.
 
-The setup helper verifies both published model packages before it installs either source.
-It refuses partial or different existing source folders. The `run` command makes a complete
-new work copy and requires HEC-RAS 7.0.1. The `check` command checks an explicit run folder.
-Follow the guide for the sequential Beaver Creek and Davis prompts and native result review.
-These checks do not establish engineering validity.
+Read [Course setup and first model runs](docs/COURSE_SETUP.md) for the complete short lesson.
+The lesson remains a draft. See [Instructor notes](docs/COURSE_SETUP_INSTRUCTOR.md) for test
+status, implementation details, and earlier evidence. See [Model inputs](docs/MODEL_INPUTS.md)
+for package details and optional manual work. Result checks do not establish engineering validity.
 
 ## Repository layout
 

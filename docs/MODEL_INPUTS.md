@@ -13,7 +13,18 @@ The whole-corpus runner is an instructor utility. Students do not need the other
 projects to use the current course scripts. The Davis storm and reporting-interval scripts
 create their new lesson plans in working copies. Those generated plans are not package inputs.
 
-## Install the inputs
+## Automatic course setup
+
+Follow [Course setup and first model runs](COURSE_SETUP.md). Open `Setup Course.cmd` in the
+extracted repository folder. It prepares Python, installs the pinned libraries, and downloads
+and verifies both packages from release `model-inputs-v0.1.1`. You do not need to download
+model ZIPs separately. Then open `Run Models.cmd` to compute and check both working copies.
+Read the printed `FIRST_RUN_RESULTS.txt` path for exact working projects and evidence paths.
+
+The repository ZIP contains code. The release ZIPs contain model inputs. Setup obtains the
+release ZIPs for you. The remaining manual steps are optional instructor or diagnostic work.
+
+## Optional manual input installation
 
 1. Open the course repository folder in the agent app.
 2. Download the required model ZIP from the model-inputs release. Use the links, byte sizes,
@@ -35,7 +46,7 @@ data/Example_Projects_7_0/Pipes/Davis/DavisStormSystem.prj
 Each package has unique metadata filenames at the extraction root. Both packages can be
 installed under the same `data/` folder without overwriting each other's metadata.
 
-## Produce lesson results
+## Optional manual model runs
 
 Ask the agent to read `AGENTS.md`, verify the package, and copy the complete selected model
 folder into a new directory under `work/`. Each plan must run against that copy. Record the
